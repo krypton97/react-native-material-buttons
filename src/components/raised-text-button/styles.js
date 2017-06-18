@@ -18,6 +18,12 @@ const styles = StyleSheet.create({
       },
     }),
   },
+  wrap: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  }
 });
 
 export { styles };
