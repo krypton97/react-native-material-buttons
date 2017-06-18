@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import RaisedButton from '../raised-button';
 import { styles } from './styles';
@@ -20,19 +21,39 @@ export default class RaisedTextButton extends PureComponent {
   };
 
   render() {
-    let { title, titleColor, disabledTitleColor, ...props } = this.props;
+    let { title, titleColor, disabledTitleColor, iconProps, ...props } = this.props;
     let { disabled } = this.props;
 
     let titleStyle = {
-      color: disabled? disabledTitleColor : titleColor,
+      color: disabled ? disabledTitleColor : titleColor,
+      ...this.props.titleStyle
     };
 
-    return (
-      <RaisedButton rippleColor={titleColor} shadeColor={titleColor} {...props}>
-        <Text style={[styles.text, titleStyle]} numberOfLines={1}>
-          {String(title).toUpperCase()}
-        </Text>
-      </RaisedButton>
-    );
+    if (this.props.iconProps) {
+      return (
+        <RaisedButton rippleColor={titleColor} shadeColor={titleColor} {...props}>
+          <View style={styles.wrap} >
+            <Icon
+              size={iconProps.size}
+              name={iconProps.name}
+              color={iconProps.color}
+              style={{}}
+            />
+            <Text style={[styles.Text, titleStyle]} numberOfLines={1}>
+              {title}
+            </Text>
+          </View>
+        </RaisedButton>
+      );
+    } else {
+      return (
+        <RaisedButton rippleColor={titleColor} shadeColor={titleColor} {...props}>
+          <Text style={iconProps ? [styles.iconText, titleStyle] : [styles.text, titleStyle]} numberOfLines={1}>
+            {title}
+          </Text>
+        </RaisedButton>
+      )
+    }
+
   }
 }
